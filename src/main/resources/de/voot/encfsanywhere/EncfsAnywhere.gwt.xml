@@ -13,6 +13,6 @@
 	<source path='client' />
 
 	<set-property name='gwt.logging.popupHandler' value='DISABLED'/> 
-	<set-property name="user.agent" value="safari" />
+<!-- 	<set-property name="user.agent" value="safari" /> -->
 <!-- 	<add-linker name="sso"/> -->
 </module>

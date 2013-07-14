@@ -28,8 +28,8 @@ window.saveAs || ( window.saveAs = (window.navigator.msSaveBlob ? function(b,n){
 			// Create Click event
 			var clickEvent = document.createEvent ("MouseEvent");
 			clickEvent.initMouseEvent ("click", true, true, window, 0, 
-				event.screenX, event.screenY, event.clientX, event.clientY, 
-				event.ctrlKey, event.altKey, event.shiftKey, event.metaKey, 
+					clickEvent.screenX, clickEvent.screenY, clickEvent.clientX, clickEvent.clientY, 
+					clickEvent.ctrlKey, clickEvent.altKey, clickEvent.shiftKey, clickEvent.metaKey, 
 				0, null);
  
 			// dispatch click event to simulate download
