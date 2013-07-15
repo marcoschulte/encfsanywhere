@@ -67,7 +67,6 @@
 				<configuration>
 					<compileSourcesArtifacts>
 						<artifact>de.voot:encfs-gwt</artifact>
-						<artifact>de.voot:DropboxEncFSFileProvider</artifact>
 						<artifact>de.voot:dropbox-gwt</artifact>
 						<artifact>com.google.gwt.inject:gin</artifact>
 					</compileSourcesArtifacts>
