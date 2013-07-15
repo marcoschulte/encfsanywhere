@@ -15,7 +15,7 @@
 					<div class="span4">
 						<div class="login-form">
 							<div class="control-group">
-								<g:PasswordTextBox styleName="login-field" ui:field="password" />
+								<g:PasswordTextBox styleName="login-field unlockPassword" ui:field="password" />
 			            	</div>
 							<div class="control-group">
 								<g:Button styleName="btn btn-primary btn-block btn-large" ui:field="loginButton" text="Login" />

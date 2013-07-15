@@ -94,3 +94,11 @@ body {
 	vertical-align: baseline;
 }
 
+.logo {
+	width: 60px;
+	height: 60px;
+}
+
+.unlockPassword {
+	width: 242px !important;
+}
