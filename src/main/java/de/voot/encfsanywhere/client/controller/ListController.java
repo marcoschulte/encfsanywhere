@@ -155,11 +155,11 @@ public class ListController implements Controller {
 			public void onSuccess(final Path[] result) {
 				LOG.info("Received list of files");
 				eventBus.fireEvent(new AsyncCallFinishedEvent());
+				listPresenter.go(container);
 				if (!disablePasswordPrompt && files.isEncFSRoot(path) && !files.isEncFSRootUnlocked(path)) {
 					listPresenter.promptForPassword();
 				} else {
 					listPresenter.listFiles(files, path, result);
-					listPresenter.go(container);
 				}
 			}
 		});

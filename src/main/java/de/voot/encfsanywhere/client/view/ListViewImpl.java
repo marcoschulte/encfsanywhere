@@ -100,6 +100,8 @@ public class ListViewImpl extends Composite implements ListView {
 				disconnectClicked();
 			}
 		});
+
+		password.getElement().setAttribute("placeholder", "Your EncFS Password");
 	}
 
 	@Override
