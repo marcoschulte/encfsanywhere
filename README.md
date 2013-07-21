@@ -1,10 +1,18 @@
 # EncfsAnywhere
-A Dropbox fileviewer with encfs-capabilities that runs entirely in your browser. It is written using GWT and compiled to a HTML/JS app that does not need any server backend.
+An EncFS capable fileviewer for Dropbox that runs entirely in your browser.
 
-This project only provides the gui. The filesystem module used can be found in the EncfsAnywhere-fs project.
+If you are using EncFS to keep your files safe and want to be able to access them from any computer that provides a browser, this app might interest you. EncfsAnyhwere is able to connect to your Dropbox and decrypt EncFS folders you store in there. Your EncFS password never leaves your computer, nor are any decrypted files transferred anywhere! The encrypted files are loaded from your Dropbox and decrypted within your browser. Everything happens on your computer, not on any server!
 
-## Use it
-You find a hosted copy at <http://marcoschulte.bitbucket.org/EncfsAnywhere/EncfsAnywhere.html>
+It is written in Java and compiled to a HTML/JavaScript app using GWT.
+
+## Getting started
+Your encrypted EncFS folders need to be accessible by EncfsAnyhwere: Upon the first connect of EncfsAnywhere with your Dropbox, an application folder will be created at `~/Dropbox/Apps/EncFSAnyhwere/`. Thats where you either place your encrypted folders, or from where you symlink to them.
+
+Then you need a copy of EncfsAnyhwere:
+
+* You find a copy at <http://marcoschulte.bitbucket.org/EncfsAnywhere/EncfsAnywhere.html>
+* Download your copy from the download section and upload it somewhere, so it's accessible for you from everywhere you are
+* Clone the project and compile it yourself
 
 ## Compatibility
 ### Browsers
@@ -13,10 +21,10 @@ EncfsAnywhere has been tested successfully with the following browsers
 * Chrome >= 27
 * Firefox >= 22
 
-### Encfs
-Encfs needs to use AES, Blowfish is not supported.
+### EncFS
+The EncFS volume you want to view needs to use AES as cipher, Blowfish is not supported.
 
-Apart from that all encfs settings should work.
+All other settings should work, but aren't extensivly tested. But I can assure that EncFS' paranoia mode is working.
 
 ## Dependencies
 * EncfsAnywhere-fs (<https://bitbucket.org/marcoschulte/encfsanywhere-fs>)
