@@ -49,7 +49,7 @@ import de.voot.encfsgwt.shared.jre.InputStream;
 
 public class ListController implements Controller {
 
-	private static final Logger LOG = Logger.getLogger("ListController");
+	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.ListController");
 
 	private Injector injector = InjectorHolder.getInjector();
 	private HandlerManager eventBus = injector.getHandlerManager();
@@ -131,7 +131,6 @@ public class ListController implements Controller {
 			public void onFailure(Exception reason) {
 				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				LOG.log(Level.SEVERE, "Couldn't get path object for path string", reason);
-				eventBus.fireEvent(new AlertEvent("Error", "Couldn't open path. Error is: " + reason.getMessage()));
 			}
 		});
 	}
@@ -148,7 +147,6 @@ public class ListController implements Controller {
 			public void onFailure(Exception reason) {
 				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				LOG.log(Level.SEVERE, "Exception getting list of files for path: " + path, reason);
-				eventBus.fireEvent(new AlertEvent("Error", "Couldn't list files. Error is: " + reason.getMessage()));
 			}
 
 			@Override
@@ -182,7 +180,6 @@ public class ListController implements Controller {
 			public void onFailure(Exception reason) {
 				UIUtil.hideKeyDerivationOverlay();
 				LOG.log(Level.SEVERE, "Couldn't unlock encfs volume", reason);
-				eventBus.fireEvent(new AlertEvent("Error", "Couldn't unlock encfs volume. Error is: " + reason.getMessage()));
 			}
 
 			@Override
@@ -217,8 +214,7 @@ public class ListController implements Controller {
 			@Override
 			public void onFailure(Exception reason) {
 				removeFromDownloadList(path.toString());
-				LOG.log(Level.SEVERE, "getFileContent failed", reason);
-				eventBus.fireEvent(new AlertEvent("Error", "Couldn't receive file contents. Error is: " + reason.getMessage()));
+				LOG.log(Level.SEVERE, "Couldn't receive file contents.", reason);
 			}
 
 			@Override

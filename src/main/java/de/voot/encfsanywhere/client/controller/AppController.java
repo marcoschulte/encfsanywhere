@@ -29,7 +29,7 @@ import de.voot.encfsanywhere.client.gin.InjectorHolder;
 
 public class AppController implements Controller {
 
-	private static final Logger LOG = Logger.getLogger("ListController");
+	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.AppController");
 
 	private Injector injector = InjectorHolder.getInjector();
 	private HasWidgets container;
@@ -55,7 +55,7 @@ public class AppController implements Controller {
 	private void initControllers() {
 		LOG.log(Level.INFO, "Initializing controllers");
 
-		Controller[] controllers = new Controller[] { injector.getStorageConnectController(), injector.getAlertController(), injector.getListController(),
+		Controller[] controllers = new Controller[] { injector.getAlertController(), injector.getStorageConnectController(), injector.getListController(),
 				injector.getUiSugarController() };
 		for (Controller controller : controllers) {
 			controller.init(container);

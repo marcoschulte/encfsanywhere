@@ -5,7 +5,7 @@
 		<div class="alert alert-block">
 			<g:Button ui:field="closeButton" styleName="close">&times;</g:Button>
 			<h4 ui:field="caption"></h4>
-			<g:Label ui:field="text"></g:Label>
+			<g:HTML ui:field="text"></g:HTML>
 		</div>
 		
 	</g:HTMLPanel>

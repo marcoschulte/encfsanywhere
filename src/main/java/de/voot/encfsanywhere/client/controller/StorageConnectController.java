@@ -31,13 +31,12 @@ import de.voot.encfsanywhere.client.HistoryItems;
 import de.voot.encfsanywhere.client.event.AsyncCallFinishedEvent;
 import de.voot.encfsanywhere.client.event.AsyncCallStartedEvent;
 import de.voot.encfsanywhere.client.event.DropboxConnectedEvent;
-import de.voot.encfsanywhere.client.event.AlertEvent;
 import de.voot.encfsanywhere.client.gin.Injector;
 import de.voot.encfsanywhere.client.gin.InjectorHolder;
 
 public class StorageConnectController implements Controller {
 
-	private static final Logger LOG = Logger.getLogger("StorageConnectController");
+	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.StorageConnectController");
 
 	private Injector injector = InjectorHolder.getInjector();
 	private HandlerManager eventBus = injector.getHandlerManager();
@@ -82,8 +81,7 @@ public class StorageConnectController implements Controller {
 		dropboxWrapper.isAuthenticated(new Callback<Boolean, ApiError>() {
 			@Override
 			public void onFailure(ApiError reason) {
-				LOG.log(Level.SEVERE, reason.getResponseText());
-				eventBus.fireEvent(new AlertEvent("Error", "There was an error auto-reconnecting. Error is: " +  reason.getResponseText()));
+				LOG.log(Level.WARNING, "There was an error auto-reconnecting. Error is: " +  reason.getResponseText());
 			}
 
 			@Override
@@ -123,9 +121,8 @@ public class StorageConnectController implements Controller {
 
 			@Override
 			public void onFailure(ApiError reason) {
-				LOG.log(Level.SEVERE, "Error during dropbox auth sequence: " + reason.getResponseText());
+				LOG.log(Level.WARNING, "Couldn't connect to dropbox. Reason is: " + reason.getResponseText());
 				eventBus.fireEvent(new AsyncCallFinishedEvent());
-				eventBus.fireEvent(new AlertEvent("Error", "Couldn't connect to dropbox. Reason is:" + reason.getResponseText()));
 				History.newItem(HistoryItems.STORAGE_CONNECT);
 			}
 		});

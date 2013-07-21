@@ -22,13 +22,17 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import de.voot.encfsanywhere.client.controller.AppController;
+import de.voot.encfsanywhere.client.logging.AlertEventLogHandler;
 
 public class EncfsAnywhere implements EntryPoint {
 
-	private static final Logger LOG = Logger.getLogger("EncfsAnywhere");
+	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.EncfsAnywhere");
 
 	@Override
 	public void onModuleLoad() {
+		Logger rootLogger = Logger.getLogger("");
+		rootLogger.addHandler(new AlertEventLogHandler());
+
 		LOG.info("EncfsAnywhere loaded. Starting AppController.");
 
 		AppController appController = new AppController();

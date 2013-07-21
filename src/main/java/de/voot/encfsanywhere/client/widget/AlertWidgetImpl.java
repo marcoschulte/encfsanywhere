@@ -20,11 +20,12 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.HeadingElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.voot.encfsanywhere.client.presenter.AlertPresenter;
@@ -42,7 +43,7 @@ public class AlertWidgetImpl extends Composite implements AlertWidget {
 	@UiField
 	HeadingElement caption;
 	@UiField
-	Label text;
+	HTML text;
 	@UiField
 	Button closeButton;
 
@@ -65,7 +66,7 @@ public class AlertWidgetImpl extends Composite implements AlertWidget {
 	@Override
 	public void show(String caption, String text) {
 		this.caption.setInnerText(caption);
-		this.text.setText(text);
+		this.text.setHTML(new SafeHtmlBuilder().appendEscapedLines(text).toSafeHtml());
 	}
 
 }
