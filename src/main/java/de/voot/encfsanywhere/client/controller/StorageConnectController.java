@@ -28,11 +28,10 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import de.voot.dropboxgwt.client.DropboxWrapper;
 import de.voot.dropboxgwt.client.overlay.ApiError;
 import de.voot.encfsanywhere.client.HistoryItems;
-import de.voot.encfsanywhere.client.event.AsyncCallFinishedEvent;
-import de.voot.encfsanywhere.client.event.AsyncCallStartedEvent;
 import de.voot.encfsanywhere.client.event.DropboxConnectedEvent;
 import de.voot.encfsanywhere.client.gin.Injector;
 import de.voot.encfsanywhere.client.gin.InjectorHolder;
+import de.voot.encfsanywhere.client.util.Async;
 
 public class StorageConnectController implements Controller {
 
@@ -111,21 +110,18 @@ public class StorageConnectController implements Controller {
 		LOG.log(Level.INFO, "Authing with dropbox. Saving oauth tokens: " + rememberUser);
 		final DropboxWrapper dropboxWrapper = injector.getDropboxWrapper();
 
-		eventBus.fireEvent(new AsyncCallStartedEvent());
-		dropboxWrapper.authenticate(rememberUser, new Callback<Void, ApiError>() {
+		dropboxWrapper.authenticate(rememberUser, Async.wrap(new Callback<Void, ApiError>() {
 			@Override
 			public void onSuccess(Void result) {
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				dropboxConnected(dropboxWrapper);
 			}
 
 			@Override
 			public void onFailure(ApiError reason) {
 				LOG.log(Level.WARNING, "Couldn't connect to dropbox. Reason is: " + reason.getResponseText());
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				History.newItem(HistoryItems.STORAGE_CONNECT);
 			}
-		});
+		}));
 
 	}
 

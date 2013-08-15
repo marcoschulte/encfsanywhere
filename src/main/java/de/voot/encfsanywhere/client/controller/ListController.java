@@ -29,17 +29,16 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 import de.voot.dropboxgwt.client.DropboxWrapper;
 import de.voot.dropboxgwt.client.ProgressCallback;
-import de.voot.encfsanywhere.client.BrowserUtil;
 import de.voot.encfsanywhere.client.HistoryItems;
 import de.voot.encfsanywhere.client.event.AlertEvent;
-import de.voot.encfsanywhere.client.event.AsyncCallFinishedEvent;
-import de.voot.encfsanywhere.client.event.AsyncCallStartedEvent;
 import de.voot.encfsanywhere.client.event.DropboxConnectedEvent;
 import de.voot.encfsanywhere.client.event.DropboxConnectedEventHandler;
 import de.voot.encfsanywhere.client.gin.Injector;
 import de.voot.encfsanywhere.client.gin.InjectorHolder;
 import de.voot.encfsanywhere.client.model.DownloadStatus;
 import de.voot.encfsanywhere.client.presenter.ListPresenter;
+import de.voot.encfsanywhere.client.util.Async;
+import de.voot.encfsanywhere.client.util.BrowserUtil;
 import de.voot.encfsanywhere.client.view.util.UIUtil;
 import de.voot.encfsanywhere.fs.shared.Files;
 import de.voot.encfsanywhere.fs.shared.Path;
@@ -118,21 +117,18 @@ public class ListController implements Controller {
 			History.newItem(HistoryItems.LIST_PREFIX + validatedPath, false);
 		}
 
-		eventBus.fireEvent(new AsyncCallStartedEvent());
-		files.pathForName(validatedPath, new Callback<Path, Exception>() {
+		files.pathForName(validatedPath, Async.wrap(new Callback<Path, Exception>() {
 			@Override
 			public void onSuccess(Path path) {
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				currentPath = path;
 				showFiles(path);
 			}
 
 			@Override
 			public void onFailure(Exception reason) {
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				LOG.log(Level.SEVERE, "Couldn't get path object for path string", reason);
 			}
-		});
+		}));
 	}
 
 	private void showFiles(final Path path) {
@@ -141,18 +137,17 @@ public class ListController implements Controller {
 
 	private void showFiles(final Path path, final boolean disablePasswordPrompt) {
 		LOG.info("Loading list of files for path <" + path + "> and presenting");
-		eventBus.fireEvent(new AsyncCallStartedEvent());
-		files.listFiles(path, new Callback<Path[], Exception>() {
+
+		files.listFiles(path, Async.wrap(new Callback<Path[], Exception>() {
 			@Override
 			public void onFailure(Exception reason) {
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
 				LOG.log(Level.SEVERE, "Exception getting list of files for path: " + path, reason);
 			}
 
 			@Override
 			public void onSuccess(final Path[] result) {
 				LOG.info("Received list of files");
-				eventBus.fireEvent(new AsyncCallFinishedEvent());
+
 				listPresenter.go(container);
 				if (!disablePasswordPrompt && files.isEncFSRoot(path) && !files.isEncFSRootUnlocked(path)) {
 					listPresenter.promptForPassword();
@@ -160,7 +155,7 @@ public class ListController implements Controller {
 					listPresenter.listFiles(files, path, result);
 				}
 			}
-		});
+		}));
 	}
 
 	public void passwordPromptFinished(String password) {
