@@ -27,9 +27,11 @@ public class StorageConnectPresenter implements Presenter {
 
 	public interface StorageConnectView extends View<StorageConnectPresenter> {
 		public HasValue<Boolean> rememberUserChecked();
+		public HasValue<Boolean> customApiKeyChecked();
+		public HasValue<String> dropboxApiKey();
 	}
 
-	private final Injector injector = InjectorHolder.getInjector();
+	private final Injector injector = InjectorHolder.getInstance();
 	private final StorageConnectView view = injector.getStorageConnectView();
 
 	public StorageConnectPresenter() {
@@ -44,7 +46,12 @@ public class StorageConnectPresenter implements Presenter {
 
 	public void onDropboxConnectButtonClicked() {
 		Boolean rememberUser = view.rememberUserChecked().getValue();
-		injector.getStorageConnectController().connectToDropbox(rememberUser);
+
+		if(view.customApiKeyChecked().getValue()){
+			injector.getStorageConnectController().connectToDropbox(rememberUser, view.dropboxApiKey().getValue());
+		}else{
+			injector.getStorageConnectController().connectToDropbox(rememberUser);
+		}
 	}
 
 }

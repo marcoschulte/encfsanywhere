@@ -31,7 +31,7 @@ public class AppController implements Controller {
 
 	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.AppController");
 
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private HasWidgets container;
 
 	@Override

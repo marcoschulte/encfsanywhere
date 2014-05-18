@@ -41,4 +41,12 @@ public class UIUtil {
 	public static final native void hidePasswordPrompt() /*-{
 		$wnd.$("#passwordEntryPrompt").hide();
 	}-*/;
+
+	public static final native void showProvdeDBApiKeyInstructions() /*-{
+		$wnd.$("#ownDropboxKeyInstructions").slideDown();
+	}-*/;
+
+	public static final native void hideProvdeDBApiKeyInstructions() /*-{
+		$wnd.$("#ownDropboxKeyInstructions").slideUp();
+	}-*/;
 }

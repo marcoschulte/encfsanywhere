@@ -16,5 +16,5 @@
 	<set-property name="gwt.logging.popupHandler" value="DISABLED" />
 	<!-- <set-property name="gwt.logging.logLevel" value="SEVERE" /> -->
 	<set-property name="user.agent" value="safari,gecko1_8" />
-	<!-- <add-linker name="sso"/> -->
+	<add-linker name="xsiframe"/>
 </module>

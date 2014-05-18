@@ -20,7 +20,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.inject.client.AbstractGinModule;
 import com.google.inject.Singleton;
 
-import de.voot.dropboxgwt.client.DropboxWrapper;
 import de.voot.encfsanywhere.client.controller.AlertController;
 import de.voot.encfsanywhere.client.controller.ListController;
 import de.voot.encfsanywhere.client.controller.StorageConnectController;
@@ -39,7 +38,6 @@ public class GinModule extends AbstractGinModule {
 	@Override
 	protected void configure() {
 		bind(HandlerManager.class).toProvider(HandlerManagerProvider.class).in(Singleton.class);
-		bind(DropboxWrapper.class).toProvider(DropboxWrapperProvider.class);
 
 		bind(UISugarController.class).in(Singleton.class);
 

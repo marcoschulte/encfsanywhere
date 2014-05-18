@@ -18,6 +18,8 @@ package de.voot.encfsanywhere.client.view;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -25,11 +27,13 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HasValue;
+import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 import de.voot.encfsanywhere.client.presenter.StorageConnectPresenter;
 import de.voot.encfsanywhere.client.presenter.StorageConnectPresenter.StorageConnectView;
 import de.voot.encfsanywhere.client.view.util.FlatUIHelper;
+import de.voot.encfsanywhere.client.view.util.UIUtil;
 
 public class StorageConnectViewImpl extends Composite implements StorageConnectView {
 
@@ -37,7 +41,11 @@ public class StorageConnectViewImpl extends Composite implements StorageConnectV
 	@UiField
 	CheckBox stayConnectedCheckbox;
 	@UiField
+	CheckBox provideAPIKey;
+	@UiField
 	Button connectDropboxButton;
+	@UiField
+	TextBox dropboxApiKey;
 
 	private StorageConnectPresenter presenter;
 
@@ -47,7 +55,19 @@ public class StorageConnectViewImpl extends Composite implements StorageConnectV
 	public StorageConnectViewImpl() {
 		initWidget(uiBinder.createAndBindUi(this));
 
+		FlatUIHelper.initCheckboxOrRadio(provideAPIKey.getElement());
 		FlatUIHelper.initCheckboxOrRadio(stayConnectedCheckbox.getElement());
+
+		provideAPIKey.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
+			@Override
+			public void onValueChange(ValueChangeEvent<Boolean> event) {
+				if(provideAPIKey.getValue()){
+					UIUtil.showProvdeDBApiKeyInstructions();
+				}else{
+					UIUtil.hideProvdeDBApiKeyInstructions();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -58,6 +78,16 @@ public class StorageConnectViewImpl extends Composite implements StorageConnectV
 	@Override
 	public HasValue<Boolean> rememberUserChecked() {
 		return stayConnectedCheckbox;
+	}
+
+	@Override
+	public HasValue<Boolean> customApiKeyChecked() {
+		return provideAPIKey;
+	}
+
+	@Override
+	public HasValue<String> dropboxApiKey() {
+		return dropboxApiKey;
 	}
 
 	@UiHandler("connectDropboxButton")

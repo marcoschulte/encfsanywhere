@@ -50,7 +50,7 @@ public class ListController implements Controller {
 
 	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.ListController");
 
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private HandlerManager eventBus = injector.getHandlerManager();
 	private ListPresenter listPresenter = injector.getListPresenter();
 	private HasWidgets container;

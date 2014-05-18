@@ -30,7 +30,7 @@ import de.voot.encfsanywhere.client.gin.InjectorHolder;
 import de.voot.encfsanywhere.client.view.util.UIUtil;
 
 public class UISugarController implements Controller {
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private HandlerManager eventBus = injector.getHandlerManager();
 
 	private int asyncCallsPlaced = 0;

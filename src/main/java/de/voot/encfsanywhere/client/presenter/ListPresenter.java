@@ -41,7 +41,7 @@ public class ListPresenter implements Presenter {
 		public void promptForPassword();
 	}
 
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private ListView view = injector.getListView();
 
 	private Files files;

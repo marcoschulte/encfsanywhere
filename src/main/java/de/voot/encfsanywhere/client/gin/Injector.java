@@ -20,7 +20,6 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.inject.client.GinModules;
 import com.google.gwt.inject.client.Ginjector;
 
-import de.voot.dropboxgwt.client.DropboxWrapper;
 import de.voot.encfsanywhere.client.controller.AlertController;
 import de.voot.encfsanywhere.client.controller.ListController;
 import de.voot.encfsanywhere.client.controller.StorageConnectController;
@@ -36,8 +35,6 @@ import de.voot.encfsanywhere.client.presenter.StorageConnectPresenter.StorageCon
 public interface Injector extends Ginjector {
 
 	public HandlerManager getHandlerManager();
-
-	public DropboxWrapper getDropboxWrapper();
 
 	public UISugarController getUiSugarController();
 

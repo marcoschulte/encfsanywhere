@@ -30,7 +30,7 @@ import de.voot.encfsanywhere.client.presenter.AlertPresenter;
 
 public class AlertController implements Controller {
 
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private HandlerManager eventBus = injector.getHandlerManager();
 	private HasWidgets container;
 

@@ -27,7 +27,7 @@ public class AlertPresenter implements Presenter {
 	}
 
 	private HasWidgets container;
-	private AlertWidget widget = InjectorHolder.getInjector().getAlertWidget();
+	private AlertWidget widget = InjectorHolder.getInstance().getAlertWidget();
 
 	@Override
 	public void go(HasWidgets container) {

@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import com.google.gwt.core.client.Callback;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
 
@@ -37,7 +38,7 @@ public class StorageConnectController implements Controller {
 
 	private static final Logger LOG = Logger.getLogger("de.voot.encfsanywhere.client.controller.StorageConnectController");
 
-	private Injector injector = InjectorHolder.getInjector();
+	private Injector injector = InjectorHolder.getInstance();
 	private HandlerManager eventBus = injector.getHandlerManager();
 	private HasWidgets container;
 
@@ -58,7 +59,7 @@ public class StorageConnectController implements Controller {
 		if (token != null) {
 			if (token.equals(HistoryItems.STORAGE_CONNECT)) {
 				injector.getStorageConnectPresenter().go(container);
-			} else if (token.startsWith(HistoryItems.STORAGE_AUTO_CONNECT)) {
+			} else if (token.startsWith(HistoryItems.STORAGE_AUTO_CONNECT) || token.startsWith("access_token")) {
 				autoConnect();
 			} else if (token.startsWith(HistoryItems.STORAGE_CONNECT_NO_REMEMBER)) {
 				authDropbox(false);
@@ -75,12 +76,12 @@ public class StorageConnectController implements Controller {
 	}
 
 	private void autoConnect() {
-		LOG.log(Level.INFO, "Trying autoconnect");
-		final DropboxWrapper dropboxWrapper = injector.getDropboxWrapper();
+		LOG.log(Level.INFO, "Trying autoconnect with Dropbox");
+		final DropboxWrapper dropboxWrapper = getDropboxWrapper();
 		dropboxWrapper.isAuthenticated(new Callback<Boolean, ApiError>() {
 			@Override
 			public void onFailure(ApiError reason) {
-				LOG.log(Level.WARNING, "There was an error auto-reconnecting. Error is: " +  reason.getResponseText());
+				LOG.log(Level.WARNING, "There was an error auto-reconnecting. Error is: " + reason.getResponseText());
 			}
 
 			@Override
@@ -96,6 +97,10 @@ public class StorageConnectController implements Controller {
 	}
 
 	public void connectToDropbox(boolean rememberUser) {
+		connectToDropbox(rememberUser, null);
+	}
+
+	public void connectToDropbox(boolean rememberUser, String apiKey) {
 		LOG.log(Level.INFO, "Starting new dropbox auth sequence. Remember set to: " + rememberUser);
 		if (rememberUser) {
 			History.newItem(HistoryItems.STORAGE_CONNECT_REMEMBER, false);
@@ -103,12 +108,16 @@ public class StorageConnectController implements Controller {
 			History.newItem(HistoryItems.STORAGE_CONNECT_NO_REMEMBER, false);
 		}
 
-		authDropbox(rememberUser);
+		authDropbox(rememberUser, apiKey);
 	}
 
 	private void authDropbox(boolean rememberUser) {
+		authDropbox(rememberUser, null);
+	}
+
+	private void authDropbox(boolean rememberUser, String apiKey) {
 		LOG.log(Level.INFO, "Authing with dropbox. Saving oauth tokens: " + rememberUser);
-		final DropboxWrapper dropboxWrapper = injector.getDropboxWrapper();
+		final DropboxWrapper dropboxWrapper = getDropboxWrapper(apiKey);
 
 		dropboxWrapper.authenticate(rememberUser, Async.wrap(new Callback<Void, ApiError>() {
 			@Override
@@ -122,7 +131,29 @@ public class StorageConnectController implements Controller {
 				History.newItem(HistoryItems.STORAGE_CONNECT);
 			}
 		}));
+	}
 
+	private DropboxWrapper getDropboxWrapper() {
+		String apiKey = Storage.getLocalStorageIfSupported().getItem("dropboxapikey");
+		if (apiKey == null) {
+			return newDropboxWrapper("p0xz4365l9f0z75");
+		} else {
+			return newDropboxWrapper(apiKey);
+		}
+	}
+
+	private DropboxWrapper getDropboxWrapper(String apiKey) {
+		if (apiKey != null) {
+			Storage.getLocalStorageIfSupported().setItem("dropboxapikey", apiKey.trim());
+		} else {
+			Storage.getLocalStorageIfSupported().removeItem("dropboxapikey");
+		}
+		return getDropboxWrapper();
+	}
+
+	private DropboxWrapper newDropboxWrapper(String apiKey) {
+		LOG.log(Level.INFO, "Using dropbox api key " + apiKey);
+		return new DropboxWrapper(apiKey);
 	}
 
 }

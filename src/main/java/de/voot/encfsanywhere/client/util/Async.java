@@ -33,18 +33,18 @@ public class Async {
 		Callback<T, F> result = new Callback<T, F>() {
 			@Override
 			public void onFailure(F reason) {
-				InjectorHolder.getInjector().getHandlerManager().fireEvent(new AsyncCallFinishedEvent());
+				InjectorHolder.getInstance().getHandlerManager().fireEvent(new AsyncCallFinishedEvent());
 				callback.onFailure(reason);
 			}
 
 			@Override
 			public void onSuccess(T result) {
-				InjectorHolder.getInjector().getHandlerManager().fireEvent(new AsyncCallFinishedEvent());
+				InjectorHolder.getInstance().getHandlerManager().fireEvent(new AsyncCallFinishedEvent());
 				callback.onSuccess(result);
 			}
 		};
 
-		InjectorHolder.getInjector().getHandlerManager().fireEvent(new AsyncCallStartedEvent());
+		InjectorHolder.getInstance().getHandlerManager().fireEvent(new AsyncCallStartedEvent());
 		return result;
 	}
 }

@@ -14,7 +14,7 @@ import de.voot.encfsanywhere.client.gin.InjectorHolder;
  * with level > INFO.
  */
 public class AlertEventLogHandler extends Handler {
-	private HandlerManager eventBus = InjectorHolder.getInjector().getHandlerManager();
+	private HandlerManager eventBus = InjectorHolder.getInstance().getHandlerManager();
 
 	@Override
 	public void publish(LogRecord record) {
