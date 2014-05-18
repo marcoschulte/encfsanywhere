@@ -10,7 +10,7 @@ Your encrypted EncFS folders need to be accessible by EncfsAnyhwere: Upon the fi
 
 Then you need a copy of EncfsAnyhwere:
 
-* You find a copy at <http://marcoschulte.bitbucket.org/EncfsAnywhere/EncfsAnywhere.html>
+* You find a copy at <https://marcoschulte.bitbucket.org/EncfsAnywhere/EncfsAnywhere.html>
 * Download your copy from the download section and upload it somewhere, so it's accessible for you from everywhere you are
 * Clone the project and compile it yourself
 
